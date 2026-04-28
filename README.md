@@ -1,11 +1,11 @@
-# 🛡️ HospitalityShield
+#  HospitalityShield
 ### Rapid Crisis Response & Emergency Coordination Platform
 
 **HospitalityShield** is a premium, AI-powered command center designed for modern hospitality venues. It bridges the gap between guest emergencies and staff response times through real-time AI triage, live venue state visualization, and automated post-incident intelligence.
 
 ---
 
-## 🚀 Key Features
+##  Key Features
 
 ### 1. **AI Triage Engine**
 Analyzes incoming signals (CCTV anomalies, Guest SOS texts, Sensor triggers) using **Gemini 2.0 Flash**. 
@@ -33,7 +33,7 @@ Automated intelligence for better compliance and training:
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Frontend:** React 19, Vite, TypeScript
 - **Styling:** Premium Light Theme (Vanilla CSS), Lucide Icons
@@ -43,7 +43,7 @@ Automated intelligence for better compliance and training:
 
 ---
 
-## 📦 Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Node.js 18+
@@ -75,7 +75,7 @@ Automated intelligence for better compliance and training:
 
 ---
 
-## 🌐 Deployment
+##  Deployment
 
 ### Firebase Hosting
 ```bash
@@ -90,7 +90,7 @@ gcloud run deploy hospitality-shield --source . --platform managed --region us-c
 
 ---
 
-## 🔒 Security
+##  Security
 - `.env` is ignored by Git to protect API keys.
 - AI Triage inputs are sanitized before processing.
 
