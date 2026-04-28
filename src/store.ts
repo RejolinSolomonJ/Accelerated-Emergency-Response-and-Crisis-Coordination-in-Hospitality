@@ -122,7 +122,7 @@ const initialSignals: Signal[] = [
   {
     id: 'sig-1',
     source: 'SOS_TEXT',
-    rawInput: 'Ayuda! Mi esposo tiene dolor en el pecho, habitación 412',
+    rawInput: "Emergency! My husband is having severe chest pain in Room 412. He can't breathe well.",
     aiClassification: 'Medical Emergency — Cardiac Event',
     confidence: 0.96,
     assignedPriority: 'P1',
@@ -136,7 +136,7 @@ const initialSignals: Signal[] = [
   {
     id: 'sig-2',
     source: 'CCTV',
-    rawInput: 'Camera LBY-03: Anomalous aggressive motion vectors detected. Two individuals, escalating posture, throwing arms.',
+    rawInput: 'Camera LBY-03: Multiple individuals in the lobby area showing signs of physical aggression and shouting.',
     aiClassification: 'Physical Altercation — 2 Guests',
     confidence: 0.88,
     assignedPriority: 'P2',

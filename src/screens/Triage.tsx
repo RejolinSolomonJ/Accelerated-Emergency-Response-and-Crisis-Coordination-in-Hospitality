@@ -7,6 +7,7 @@ import './Triage.css';
 export default function Triage() {
   const { signals, updateSignalPriority, processSignal, addIncident } = useStore();
   const [expandedSignal, setExpandedSignal] = useState<string | null>(null);
+  const [showApiFor, setShowApiFor] = useState<string | null>(null);
   const [now, setNow] = useState(Date.now());
 
   useEffect(() => {
@@ -152,37 +153,49 @@ export default function Triage() {
               </div>
             )}
 
-            {/* Expanded view - Gemini API call demo */}
+            {/* Expanded view details */}
             {expandedSignal === signal.id && (
               <div className="signal-expanded animate-slide-up">
-                <div className="api-call-block">
-                  <div className="api-call-header mono">
-                    <span className="api-call-label">GEMINI AI CALL</span>
-                    <span className="api-call-model">gemini-2.0-flash</span>
-                  </div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '12px' }}>
+                  <button 
+                    className="btn btn-sm" 
+                    onClick={(e) => { e.stopPropagation(); setShowApiFor(showApiFor === signal.id ? null : signal.id); }}
+                    style={{ fontSize: '10px', opacity: 0.7 }}
+                  >
+                    {showApiFor === signal.id ? 'Hide Technical Details' : 'View AI Logic Logs'}
+                  </button>
+                </div>
 
-                  <div className="api-prompt">
-                    <span className="api-section-label mono">PROMPT</span>
-                    <pre className="api-code mono">{`System: "You are an emergency triage AI.
+                {showApiFor === signal.id && (
+                  <div className="api-call-block animate-fade-in">
+                    <div className="api-call-header mono">
+                      <span className="api-call-label">GEMINI AI CALL</span>
+                      <span className="api-call-model">gemini-2.0-flash</span>
+                    </div>
+
+                    <div className="api-prompt">
+                      <span className="api-section-label mono">PROMPT</span>
+                      <pre className="api-code mono">{`System: "You are an emergency triage AI.
 Classify the following signal input.
 Return JSON: {threat_category, confidence,
 recommended_response, dispatch_roles[],
 estimated_affected_guests}"
 
 User: "${signal.rawInput}"`}</pre>
-                  </div>
+                    </div>
 
-                  <div className="api-response">
-                    <span className="api-section-label mono">RESPONSE</span>
-                    <pre className="api-code mono">{JSON.stringify({
-                      threat_category: signal.threatCategory,
-                      confidence: signal.confidence,
-                      recommended_response: signal.recommendedResponse,
-                      dispatch_roles: signal.dispatchRoles,
-                      estimated_affected_guests: signal.estimatedAffected,
-                    }, null, 2)}</pre>
+                    <div className="api-response">
+                      <span className="api-section-label mono">RESPONSE</span>
+                      <pre className="api-code mono">{JSON.stringify({
+                        threat_category: signal.threatCategory,
+                        confidence: signal.confidence,
+                        recommended_response: signal.recommendedResponse,
+                        dispatch_roles: signal.dispatchRoles,
+                        estimated_affected_guests: signal.estimatedAffected,
+                      }, null, 2)}</pre>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Override controls */}
                 <div className="signal-override">
