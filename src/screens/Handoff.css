@@ -170,6 +170,140 @@
   border: 1px dashed var(--border-light);
 }
 
+/* Incident Summary */
+.incident-summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.incident-summary-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.incident-summary-header h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.incident-desc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.incident-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  background: var(--bg-hover);
+  padding: 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+}
+
+.incident-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meta-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.meta-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.incident-timeline {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.timeline-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.timeline-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.timeline-time {
+  font-size: 11px;
+  color: var(--text-secondary);
+  min-width: 65px;
+}
+
+.timeline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 4px;
+}
+
+.timeline-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.timeline-actor {
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.timeline-action {
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.timeline-detail {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Other formating for lists */
+.other-incidents {
+  margin-top: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.other-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.other-incident-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  background: var(--bg-hover);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+}
+
 /* Floor Status */
 .floor-status-grid {
   display: grid;

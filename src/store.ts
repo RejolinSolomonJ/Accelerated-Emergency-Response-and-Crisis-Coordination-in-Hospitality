@@ -131,7 +131,7 @@ const initialSignals: Signal[] = [
     dispatchRoles: ['MEDICAL'],
     estimatedAffected: 2,
     timestamp: now - 8 * 60 * 1000,
-    processed: true,
+    processed: false,
   },
   {
     id: 'sig-2',
@@ -145,7 +145,7 @@ const initialSignals: Signal[] = [
     dispatchRoles: ['SECURITY'],
     estimatedAffected: 8,
     timestamp: now - 3 * 60 * 1000,
-    processed: true,
+    processed: false,
   },
   {
     id: 'sig-3',
@@ -159,7 +159,7 @@ const initialSignals: Signal[] = [
     dispatchRoles: [],
     estimatedAffected: 0,
     timestamp: now - 12 * 60 * 1000,
-    processed: true,
+    processed: false,
   },
 ];
 
@@ -191,6 +191,7 @@ interface StoreState {
   updateResponderStatus: (id: string, status: Responder['status']) => void;
   addSignal: (signal: Signal) => void;
   updateSignalPriority: (id: string, priority: Severity) => void;
+  processSignal: (id: string) => void;
   updateZoneStatus: (zoneId: string, status: Zone['status']) => void;
   setOnline: (online: boolean) => void;
   toggleSound: () => void;
@@ -279,6 +280,13 @@ export const useStore = create<StoreState>((set) => ({
       signals: state.signals.map((s) =>
         s.id === id ? { ...s, assignedPriority: priority } : s
       ),
+    })),
+
+  processSignal: (id) => 
+    set((state) => ({
+      signals: state.signals.map((s) => 
+        s.id === id ? { ...s, processed: true } : s
+      )
     })),
 
   updateZoneStatus: (zoneId, status) =>

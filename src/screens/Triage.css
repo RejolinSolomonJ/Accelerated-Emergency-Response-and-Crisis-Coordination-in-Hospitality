@@ -121,24 +121,34 @@
 }
 
 .signal-raw-input {
-  margin-bottom: var(--space-md);
-  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .signal-raw-label {
   font-family: var(--font-mono);
   font-size: 10px;
   color: var(--text-muted);
-  letter-spacing: 1px;
-  margin-bottom: 4px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.signal-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin: 0;
 }
 
 .signal-classification {
-  margin-bottom: var(--space-md);
   padding: 12px 16px;
   background: var(--bg-hover);
   border-top: 1px solid var(--border-light);
   border-bottom: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .signal-class-value {
@@ -152,14 +162,115 @@
 .p3 .signal-class-value { color: var(--text-primary); }
 
 .signal-expanded {
-  margin-top: 12px;
-  margin-bottom: 0;
-  padding: 12px;
+  padding: 16px;
   background: #f8fafc;
   border-top: 1px solid var(--border-light);
+}
+
+.api-call-block {
+  background: #0d1117;
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  color: #c9d1d9;
+}
+
+.api-call-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #30363d;
+  font-size: 11px;
+}
+
+.api-call-label {
+  color: var(--accent-teal);
+  font-weight: 600;
+}
+
+.api-call-model {
+  color: #8b949e;
+}
+
+.api-section-label {
+  display: block;
+  font-size: 10px;
+  color: #8b949e;
+  margin-bottom: 6px;
+  margin-top: 12px;
+}
+
+.api-code {
+  margin: 0;
+  padding: 8px;
+  background: #161b22;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #e6edf3;
+}
+
+.signal-override {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.override-label {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.override-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.signal-dispatch-roles {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.dispatch-label, .rec-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.dispatch-role-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dispatch-role-tag {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--text-secondary);
+  padding: 4px 10px;
+  border: 1px solid currentColor;
+  border-radius: 20px;
+  background: var(--bg-card);
+}
+
+.signal-recommendation {
+  padding: 16px 0 0 0;
+}
+
+.signal-recommendation p {
+  font-size: 14px;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.5;
 }
 
 .triage-signal-actions {

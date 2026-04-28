@@ -143,6 +143,32 @@ p {
   box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
 }
 
+.btn-amber {
+  background: var(--accent-amber);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+}
+
+.btn-amber:hover {
+  background: #d97706;
+  border: none;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+}
+
+.btn-teal {
+  background: var(--accent-teal);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+}
+
+.btn-teal:hover {
+  background: #059669;
+  border: none;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
 .btn-sm {
   padding: 6px 12px;
   font-size: 12px;

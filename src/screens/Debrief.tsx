@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { useStore } from '../store';
 import { formatTimestamp, formatTime, roleColor, incidentTypeIcon } from '../utils';
 import { generateIncidentReport, isGeminiAvailable } from '../ai';
-import { RefreshCw, FileText, Download, Sparkles, CheckSquare, Square, Check, AlertTriangle } from 'lucide-react';
+import { Sparkles, CheckSquare, Square, Check, AlertTriangle, RefreshCw, Download } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import './Debrief.css';
 
 export default function Debrief() {
@@ -246,7 +248,9 @@ export default function Debrief() {
           </div>
           <div className="ai-report-content">
             {reportText ? (
-              <pre className="ai-report-text">{reportText}</pre>
+              <div className="ai-report-text markdown-body">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{reportText}</ReactMarkdown>
+              </div>
             ) : (
               <div className="skeleton-lines">
                 {Array.from({ length: 8 }, (_, i) => (

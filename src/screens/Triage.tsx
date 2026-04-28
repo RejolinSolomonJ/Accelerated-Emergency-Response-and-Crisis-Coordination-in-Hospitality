@@ -5,8 +5,7 @@ import { Video, Smartphone, Radio, Hand, AlertTriangle } from 'lucide-react';
 import './Triage.css';
 
 export default function Triage() {
-  const signals = useStore((s) => s.signals);
-  const updateSignalPriority = useStore((s) => s.updateSignalPriority);
+  const { signals, updateSignalPriority, processSignal, addIncident } = useStore();
   const [expandedSignal, setExpandedSignal] = useState<string | null>(null);
   const [now, setNow] = useState(Date.now());
 
@@ -14,6 +13,40 @@ export default function Triage() {
     const timer = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(timer);
   }, []);
+
+  const activeSignals = signals.filter(s => !s.processed).sort((a, b) => {
+    if (a.assignedPriority === 'P1' && b.assignedPriority !== 'P1') return -1;
+    if (b.assignedPriority === 'P1' && a.assignedPriority !== 'P1') return 1;
+    return b.timestamp - a.timestamp;
+  });
+
+  const p1Count = activeSignals.filter(s => s.assignedPriority === 'P1').length;
+  const p2Count = activeSignals.filter(s => s.assignedPriority === 'P2').length;
+  const p3Count = activeSignals.filter(s => s.assignedPriority === 'P3').length;
+
+  const handleDispatch = (signal: any, e: React.MouseEvent) => {
+    e.stopPropagation();
+    processSignal(signal.id);
+    
+    addIncident({
+      id: `inc-${Math.floor(Math.random() * 10000)}`,
+      type: signal.threatCategory.includes('medical') ? 'medical' : 
+            signal.threatCategory.includes('fire') ? 'fire' : 'security',
+      severity: signal.assignedPriority || 'P2',
+      status: 'responding',
+      title: signal.aiClassification || 'Unclassified Event',
+      description: signal.rawInput,
+      location: 'Determining...', 
+      zone: 'lobby',
+      reportedAt: signal.timestamp,
+      assignedResponders: [],
+      timeline: [
+        { id: `tl-${Date.now()}`, timestamp: signal.timestamp, actor: 'System', role: 'SYSTEM', action: `Signal ${signal.source} detected` },
+        { id: `tl-${Date.now()+1}`, timestamp: Date.now(), actor: 'Command Desk', role: 'GM', action: 'Signal escalated to Active Incident' }
+      ],
+      chatMessages: []
+    });
+  };
 
   const sourceIcon = (source: string) => {
     switch (source) {
@@ -44,24 +77,24 @@ export default function Triage() {
         </div>
         <div className="triage-stats">
           <div className="triage-stat">
-            <span className="triage-stat-number mono">{signals.length}</span>
+            <span className="triage-stat-number mono">{activeSignals.length}</span>
             <span className="triage-stat-label mono">SIGNALS</span>
           </div>
           <div className="triage-stat">
             <span className="triage-stat-number mono" style={{ color: 'var(--accent-red)' }}>
-              {signals.filter((s) => s.assignedPriority === 'P1').length}
+              {p1Count}
             </span>
             <span className="triage-stat-label mono">P1</span>
           </div>
           <div className="triage-stat">
             <span className="triage-stat-number mono" style={{ color: 'var(--accent-amber)' }}>
-              {signals.filter((s) => s.assignedPriority === 'P2').length}
+              {p2Count}
             </span>
             <span className="triage-stat-label mono">P2</span>
           </div>
           <div className="triage-stat">
             <span className="triage-stat-number mono" style={{ color: 'var(--accent-teal)' }}>
-              {signals.filter((s) => s.assignedPriority === 'P3').length}
+              {p3Count}
             </span>
             <span className="triage-stat-label mono">P3</span>
           </div>
@@ -78,10 +111,10 @@ export default function Triage() {
 
       {/* Signal Feed */}
       <div className="signal-feed">
-        {signals.map((signal, index) => (
+        {activeSignals.map((signal, index) => (
           <div
             key={signal.id}
-            className={`signal-card animate-slide-right ${expandedSignal === signal.id ? 'expanded' : ''}`}
+            className={`signal-card ${signal.assignedPriority ? signal.assignedPriority.toLowerCase() : ''} animate-slide-right ${expandedSignal === signal.id ? 'expanded' : ''}`}
             style={{ animationDelay: `${index * 0.05}s` }}
             onClick={() => setExpandedSignal(expandedSignal === signal.id ? null : signal.id)}
           >
@@ -105,9 +138,11 @@ export default function Triage() {
               </div>
             </div>
 
-            <div className="signal-raw-input">
-              <span className="signal-raw-label mono">RAW INPUT</span>
-              <p>{signal.rawInput}</p>
+            <div className="signal-body">
+              <div className="signal-raw-input">
+                <span className="signal-raw-label mono">RAW INPUT</span>
+                <p className="signal-text">{signal.rawInput}</p>
+              </div>
             </div>
 
             {signal.aiClassification && (
@@ -117,13 +152,13 @@ export default function Triage() {
               </div>
             )}
 
-            {/* Expanded view - Claude API call demo */}
+            {/* Expanded view - Gemini API call demo */}
             {expandedSignal === signal.id && (
               <div className="signal-expanded animate-slide-up">
                 <div className="api-call-block">
                   <div className="api-call-header mono">
-                    <span className="api-call-label">CLAUDE API CALL</span>
-                    <span className="api-call-model">claude-sonnet-4-20250514</span>
+                    <span className="api-call-label">GEMINI AI CALL</span>
+                    <span className="api-call-model">gemini-2.0-flash</span>
                   </div>
 
                   <div className="api-prompt">
@@ -166,7 +201,7 @@ User: "${signal.rawInput}"`}</pre>
                       P2
                     </button>
                     <button
-                      className={`btn btn-sm ${signal.assignedPriority === 'P3' ? 'btn-primary' : ''}`}
+                      className={`btn btn-sm ${signal.assignedPriority === 'P3' ? 'btn-teal' : ''}`}
                       onClick={(e) => { e.stopPropagation(); updateSignalPriority(signal.id, 'P3'); }}
                     >
                       ↓ Downgrade P3
@@ -193,6 +228,12 @@ User: "${signal.rawInput}"`}</pre>
                     <p>{signal.recommendedResponse}</p>
                   </div>
                 )}
+                
+                <div className="triage-signal-actions" style={{ marginTop: '16px' }}>
+                  <button className="btn btn-primary" onClick={(e) => handleDispatch(signal, e)}>
+                    Accept & Dispatch System →
+                  </button>
+                </div>
               </div>
             )}
           </div>
