@@ -24,8 +24,6 @@ export default function GuestSOS() {
   const [isRecording, setIsRecording] = useState(false);
   const [countdown, setCountdown] = useState(180);
   const [parsedData, setParsedData] = useState<any>(null);
-  const [parseJson, setParseJson] = useState('');
-  const [showParseBlock, setShowParseBlock] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const addIncident = useStore((s) => s.addIncident);
@@ -83,16 +81,9 @@ export default function GuestSOS() {
 
     if (isFirstMsg) {
       // Step 1: Parse the SOS message using Gemini
-      setIsStreaming(true);
-      setShowParseBlock(true);
-      setParseJson('');
-
       try {
-        const parsed = await parseSOSMessage(userMsg, (chunk) => {
-          setParseJson(chunk);
-        });
+        const parsed = await parseSOSMessage(userMsg);
         setParsedData(parsed);
-        setParseJson(JSON.stringify(parsed, null, 2));
 
         // Add AI classification message
         const aiMsg: ChatMsg = {
@@ -316,18 +307,7 @@ export default function GuestSOS() {
               </div>
             )}
 
-            {/* SOS Parse Block */}
-            {showParseBlock && parseJson && (
-              <div className="sos-parse-block animate-slide-up">
-                <div className="sos-parse-header">
-                  <span className="sos-parse-label mono">
-                    {isGeminiAvailable() ? 'GEMINI API → SOS PARSER' : 'AI TRIAGE ENGINE'}
-                  </span>
-                  {isStreaming && <span className="sos-typing-indicator">●●●</span>}
-                </div>
-                <pre className="sos-parse-code mono">{parseJson}</pre>
-              </div>
-            )}
+            {/* Loading streaming indicators or confirmation card */}
 
             {/* Confirmation Card */}
             {state === 'confirming' && parsedData && (
@@ -369,7 +349,7 @@ export default function GuestSOS() {
             )}
 
             {/* Loading skeleton */}
-            {isStreaming && !streamText && !parseJson && (
+            {isStreaming && !parsedData && (
               <div className="sos-msg sos-msg-model">
                 <div className="sos-msg-header">
                   <span className="sos-msg-role mono">AI ASSISTANT</span>
