@@ -1,0 +1,182 @@
+/* === AI Triage Engine === */
+
+.triage-container {
+  padding: var(--space-md);
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.triage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.triage-stats {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.triage-stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 16px;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  min-width: 70px;
+  box-shadow: var(--shadow-sm);
+}
+
+.triage-stat-box.active-p1 { border-color: var(--accent-red); box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2); }
+.triage-stat-box.active-p2 { border-color: var(--accent-amber); box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2); }
+
+.triage-stat-num {
+  font-size: 24px;
+  font-weight: 700;
+  font-family: var(--font-heading);
+}
+
+.triage-stat-label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.scoring-formula {
+  background: var(--bg-hover);
+  border: 1px solid var(--border-light);
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-lg);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.scoring-label {
+  color: var(--accent-teal);
+  letter-spacing: 1px;
+}
+
+.signal-feed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.signal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-left: 4px solid var(--border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s;
+  overflow: hidden;
+}
+
+.signal-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.signal-card.p1 { border-left-color: var(--accent-red); }
+.signal-card.p2 { border-left-color: var(--accent-amber); }
+.signal-card.p3 { border-left-color: var(--accent-teal); }
+
+.signal-card-top {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-hover);
+}
+
+.signal-source {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.triage-signal-scores {
+  display: flex;
+  gap: 8px;
+}
+
+.signal-body {
+  padding: 16px;
+}
+
+.signal-raw-input {
+  margin-bottom: var(--space-md);
+  padding: 0 16px;
+}
+
+.signal-raw-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.signal-classification {
+  margin-bottom: var(--space-md);
+  padding: 12px 16px;
+  background: var(--bg-hover);
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.signal-class-value {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent-amber);
+}
+
+.p1 .signal-class-value { color: var(--accent-red); }
+.p3 .signal-class-value { color: var(--text-primary); }
+
+.signal-expanded {
+  margin-top: 12px;
+  margin-bottom: 0;
+  padding: 12px;
+  background: #f8fafc;
+  border-top: 1px solid var(--border-light);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.triage-signal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  padding-top: var(--space-sm);
+}
+
+@media (max-width: 768px) {
+  .triage-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .triage-stats {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+}
